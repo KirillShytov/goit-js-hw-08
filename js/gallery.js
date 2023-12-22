@@ -64,46 +64,28 @@ const images = [
   },
 ];
 
+const createMarkup = ({ preview, original, description }) => `
+  <li class="gallery-item">
+    <a class="gallery-link" href="${original}">
+      <img
+        class="gallery-image"
+        src="${preview}"
+        data-source="${original}"
+        alt="${description}"
+        width="360"
+        
+      />
+    </a>
+  </li>
+`;
+const galleryImg = images.map(createMarkup).join("");
 const gallery = document.querySelector(".gallery");
+gallery.insertAdjacentHTML("beforeend", galleryImg);
 
-const createMarkup = gallery
-  .map(
-    ({ preview, original, description }) => `<li class="gallery-item">
-  <a class="gallery-link" href="${original}">
-    <img
-      class="gallery-image"
-      src="${preview}"
-      data-source="${original}"
-      alt="${description}"
-    />
-  </a>
-</li>`
-  )
-  .join("");
-
-// const gallery = document.querySelector(".gallery");
-// gallery.innerHTML = createMarkup(images);
-
-// gallery.addEventListener("click", handleProductClick);
-
-// function handleProductClick(event) {
-//   event.preventDefault();
-//   if (event.target === event.currentTarget) {
-//     return;
-//   }
-// }
-// const instance = basicLightbox.create(`
-//     <div class="modal">
-//   <a class="gallery-link" href="${gallery.original}">
-//     <img
-//       class="gallery-image"
-//       src="${gallery.preview}"
-//       data-source="${gallery.original}"
-//       alt="${gallery.description}"
-//       width="360"
-//     />
-//   </a>
-// </div>
-// `);
-
-// instance.show();
+gallery.addEventListener("click", selectorImage);
+function selectorImage(event) {
+  event.preventDefault();
+  if (event.target === event.currentTarget) {
+    return;
+  }
+}

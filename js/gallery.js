@@ -73,6 +73,7 @@ const createMarkup = ({ preview, original, description }) => `
         data-source="${original}"
         alt="${description}"
         width="360"
+        height="200"
         
       />
     </a>
@@ -87,5 +88,33 @@ function selectorImage(event) {
   event.preventDefault();
   if (event.target === event.currentTarget) {
     return;
+  }
+  const original = event.target.dataset.source;
+  const description = event.target.alt;
+
+  const instance = basicLightbox.create(
+    `<div class="modal">
+        <a class="gallery-link" href="${original}">
+      <img
+        class="gallery-image"
+        src="${original}"
+        alt="${description}"
+      />
+    </a>
+     </div>`,
+    {
+      onShow: () => {
+        document.addEventListener("keydown", onModalClose);
+      },
+      onclose: () => {
+        document.removeEventListener("keydown", onModalClose);
+      },
+    }
+  );
+  instance.show();
+  function onModalClose(event) {
+    if (event.code === "Escape") {
+      instance.close();
+    }
   }
 }

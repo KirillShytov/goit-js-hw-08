@@ -106,7 +106,7 @@ function selectorImage(event) {
       onShow: () => {
         document.addEventListener("keydown", onModalClose);
       },
-      onclose: () => {
+      onClose: () => {
         document.removeEventListener("keydown", onModalClose);
       },
     }
